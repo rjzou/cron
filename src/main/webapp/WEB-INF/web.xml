@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>cron</display-name>
+
+	<!-- spring  classpath:net/bull/javamelody/monitoring-spring.xml-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:net/bull/javamelody/monitoring-spring.xml
+			classpath*:applicationContext.xml
+			classpath:spring/quartz.xml
+		</param-value>
+	</context-param>
+	
+
+<!-- 性能监控插件  开始-->
+     <filter>
+          <filter-name>javamelody</filter-name>
+          <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+          <async-supported>true</async-supported>
+           <init-param>
+            <!-- set a different URL for monitoring -->
+            <param-name>monitoring-path</param-name>
+            <param-value>/monitoring</param-value>
+        </init-param>
+        <init-param>
+         	<param-name>log</param-name>
+        	<param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <!-- enable/disable JavaMelody -->
+            <param-name>disabled</param-name>
+            <param-value>false</param-value>
+        </init-param>
+          <init-param>
+       		<param-name>storage-directory</param-name>
+            <param-value>${catalina.base}/javamelody-data</param-value>
+          </init-param>
+          <init-param>
+          	<param-name>authorized-users</param-name>
+        	<param-value>monitoring:monitoring</param-value>
+          </init-param>
+    </filter>
+     <filter-mapping>
+        <filter-name>javamelody</filter-name>
+        <url-pattern>/*</url-pattern>
+         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+  	<listener>
+         <listener-class>net.bull.javamelody.SessionListener</listener-class>
+ 	</listener>
+ 	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+
+	
+	
+</web-app>
