@@ -1,12 +1,10 @@
-project name : cron
-
-description : 实现所有作业计划功能
-
-author : zouruijin
-
-date : 2015-07-28
-
-email : zrj@eeepay.cn/rjzou@qq.com
+############################################################
+项目名称 : cron
+功能 : 实现所有作业计划功能
+作者 : zouruijin
+日期 : 2015-07-28
+联系方式 : zrj@eeepay.cn/rjzou@qq.com
+############################################################
 
 使用 eclipse maven debug - > tomcat7:run 。
 
